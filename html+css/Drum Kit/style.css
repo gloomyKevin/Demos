@@ -14,9 +14,12 @@
 .key {
     width: 100px;
     height: 100px;
-    margin: 0 25px;
+    margin: 1rem;
     text-align: center;
     border: 4px solid black;
+
+    /* 这行代码至关重要---->导致了很久的bug */
+    transition:all .07s;
 }
 
 kbd {
@@ -26,5 +29,12 @@ kbd {
 }
 
 .sound {
+    /* font-size: 1.2rem; */
     letter-spacing: 0.8px;
 }
+
+.playing {
+    transform:scale(1.1);
+    border-color:#ffc600;
+    box-shadow: 0 0 10px #ffc600;
+  }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5 Canvas</title>
+</head>
+
+<body>
+    <canvas id="draw"></canvas>
+    <script>
+        /**@type HTMLCanvasElement*/
+        const canvas = document.querySelector("#draw");
+        const ctx = canvas.getContext('2d');
+        let canvasWidth = document.documentElement.clientWidth;
+        let canvasHeight = document.documentElement.clientHeight;
+
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+        boolean = painting = false;
+        // 复习：对象的解构赋值
+        let lastPoint = { undefined, undefined };
+
+        canvas.onmousedown = function (e) {
+            let x = event.clientX;
+            let y = event.clientY;
+            lastPoint = ('x', 'y');
+            // drawCircle(x, y);
+        }
+
+        canvas.onmousemove = function (e) {
+            if (painting) {
+                let x = event.clientX;
+                let y = event.clientY;
+                let newPoint = { 'x': x, 'y': y };
+                drawLine();
+                lastPoint = newPoint;
+            }
+        }
+
+        canvas.onmouseup = function (e) {
+            painting = false;
+        }
+
+        drawLine(x1, y1, x2, y2){
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+
+        }
+
+    </script>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+        }
+    </style>
+
+</body>
+
+</html>

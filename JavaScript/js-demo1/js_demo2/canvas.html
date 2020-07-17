@@ -7,46 +7,55 @@
 </head>
 
 <body>
-    <canvas id="draw"></canvas>
+    <canvas id="draw" width="800" height="800"></canvas>
     <script>
-        /**@type HTMLCanvasElement*/
-        const canvas = document.querySelector("#draw");
-        const ctx = canvas.getContext('2d');
-        let canvasWidth = document.documentElement.clientWidth;
-        let canvasHeight = document.documentElement.clientHeight;
 
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
+        window.onload = function () {
 
-        boolean = painting = false;
-        // 复习：对象的解构赋值
-        let lastPoint = { undefined, undefined };
+            /**@type HTMLCanvasElement*/
+            const canvas = document.querySelector("#draw");
+            const ctx = canvas.getContext('2d');
+            let canvasWidth = document.documentElement.clientWidth;
+            let canvasHeight = document.documentElement.clientHeight;
 
-        canvas.onmousedown = function (e) {
-            let x = event.clientX;
-            let y = event.clientY;
-            lastPoint = ('x', 'y');
-            // drawCircle(x, y);
-        }
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
 
-        canvas.onmousemove = function (e) {
-            if (painting) {
+            let painting = false;
+            // 复习：对象的解构赋值
+            let lastPoint = { undefined, undefined };
+
+            canvas.onmousedown = function (e) {
+                painting = true;
                 let x = event.clientX;
                 let y = event.clientY;
-                let newPoint = { 'x': x, 'y': y };
-                drawLine();
-                lastPoint = newPoint;
+                lastPoint = { 'x': x, 'y': y };
+                // drawCircle(x, y);
             }
-        }
 
-        canvas.onmouseup = function (e) {
-            painting = false;
-        }
+            canvas.onmousemove = function (e) {
+                if (painting) {
+                    let x = event.clientX;
+                    let y = event.clientY;
+                    let newPoint = { 'x': x, 'y': y };
+                    drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
+                    lastPoint = newPoint;
+                }
+            }
 
-        drawLine(x1, y1, x2, y2){
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
+            canvas.onmouseup = function (e) {
+                painting = false;
+            }
 
+            function drawLine(x1, y1, x2, y2) {
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.lineCap = "round"
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+                ctx.closePath();
+            }
         }
 
     </script>
@@ -55,6 +64,7 @@
         html,
         body {
             margin: 0;
+            padding: 0;
         }
     </style>
 

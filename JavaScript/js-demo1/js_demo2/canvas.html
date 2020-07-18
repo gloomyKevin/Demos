@@ -11,37 +11,60 @@
             box-sizing: border-box;
         }
 
-        /* *::before {
+        *::before {
             box-sizing: border-box;
         }
 
         *::after {
             box-sizing: border-box;
-        } */
+        }
 
-        .container {
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .clearfix::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .tools {
             position: fixed;
-            bottom: 0;
-            left: 50%;
-            margin-left: -158px;
+            left: 0;
+            bottom: 30px;
+            width: 100%;
+            height: 50px;
             display: flex;
-            width: 316px;
-            height: 51px;
-            border-radius: 20px;
-            box-shadow: 10px 10px 45px 0px rgba(0, 0, 0, 0.75);
             justify-content: center;
-            align-items: center;
+            text-align: center;
+        }
+
+        .tools .container {
+            /* height: 70px; */
+            padding: 8px 20px;
+            border-radius: 40px;
+            box-shadow: 0 1px 2px 0 rgba(32, 33, 36, 0.28);
+            background: #fff;
         }
 
         .tools button {
             width: 40px;
             height: 40px;
             margin: 0 4px;
+            border: none;
+            outline: none;
+            background-size: 20px 20px;
             background-position: center center;
             background-repeat: no-repeat;
             transition: 0.3s;
             cursor: pointer;
-            border: 1px solid pink;
+            /* border: 1px solid pink; */
+            /* background-size: cover; */
         }
 
         .tools button.active {
@@ -76,7 +99,7 @@
 </head>
 
 <body>
-    <canvas id="draw" width="800" height="800"></canvas>
+    <canvas id="draw"></canvas>
 
     <div class="tools">
         <div class="container">
@@ -106,17 +129,29 @@
         <i class="showOpacity"></i> <input type="range" id="range2" min="1" max="10" value="1">
     </div> -->
     <script>
+        /**@type HTMLCanvasElement*/
+        const canvas = document.querySelector("#draw");
+        const ctx = canvas.getContext('2d');
 
-        window.onload = () => {
+        let autoSetSize = () => {
+            let setSize = () => {
+                let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                let canvasWidth = document.documentElement.clientWidth;
+                let canvasHeight = document.documentElement.clientHeight;
 
-            /**@type HTMLCanvasElement*/
-            const canvas = document.querySelector("#draw");
-            const ctx = canvas.getContext('2d');
-            let canvasWidth = document.documentElement.clientWidth;
-            let canvasHeight = document.documentElement.clientHeight;
+                canvas.width = canvasWidth;
+                canvas.height = canvasHeight;
+                ctx.putImageData(imgData, 0, 0);
+            }
+            setSize();
 
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
+            window.setSize = () => {
+                setSize();
+            }
+        }
+
+        let listenToUser = () => {
+
 
             let painting = false;
             // 复习：对象的解构赋值
@@ -155,6 +190,8 @@
             }
         }
 
+        autoSetSize();
+        listenToUser();
     </script>
 
     <style>

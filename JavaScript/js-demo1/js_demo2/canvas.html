@@ -95,6 +95,39 @@
         .redo {
             background: url('image/redo.png');
         }
+
+
+        .closeBtn,
+        .pen-detail .closeBtn {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            background: url('image/close.png') center center no-repeat;
+            cursor: pointer;
+        }
+
+        .pen-detail {
+            display: none;
+            position: fixed;
+            left: 50%;
+            margin-left: -140px;
+            bottom: 90px;
+            width: 280px;
+            height: 210px;
+            padding: 20px 24px;
+            border: 1px solid #81A4BD;
+            border-radius: 5px;
+            color: #808FA2;
+            font-style: 18px;
+            background: #fff;
+            font-size: 14px;
+        }
+
+        .pen-detail.isActive {
+            display: block;
+        }
     </style>
 </head>
 
@@ -132,7 +165,9 @@
         /**@type HTMLCanvasElement*/
         let canvas = document.querySelector("#draw");
         let brush = document.querySelector(".brush");
-        let sizeRange = document.querySelector("#sizeRange")
+        let penDetail = document.querySelector(".pen-detail");
+        let sizeRange = document.querySelector("#sizeRange");
+        let ifPop = false;
 
         let ctx = canvas.getContext('2d');
         let lineWidth = 4;
@@ -225,6 +260,17 @@
             lineWidth = parseInt(sizeRange.value * 2);
         }
 
+        brush.onclick = (e) => {
+            brush.classList.add("isActive");
+
+            if (!ifPop) {
+                // 弹出框
+                penDetail.classList.add('isActive');
+            } else {
+                penDetail.classList.remove('isActive');
+            }
+            ifPop = !ifPop;
+        }
 
         autoSetSize();
         listenToUser();

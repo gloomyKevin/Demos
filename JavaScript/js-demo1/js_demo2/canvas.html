@@ -4,13 +4,110 @@
 <head>
     <meta charset="UTF-8">
     <title>HTML5 Canvas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* *::before {
+            box-sizing: border-box;
+        }
+
+        *::after {
+            box-sizing: border-box;
+        } */
+
+        .container {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            margin-left: -158px;
+            display: flex;
+            width: 316px;
+            height: 51px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 45px 0px rgba(0, 0, 0, 0.75);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tools button {
+            width: 40px;
+            height: 40px;
+            margin: 0 4px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid pink;
+        }
+
+        .tools button.active {
+            border: 2px solid #1398E6;
+            border-radius: 5px;
+        }
+
+        .save {
+            background: url('image/save.png');
+        }
+
+        .brush {
+            background: url('image/pen.png');
+        }
+
+        .eraser {
+            background: url('image/eraser.png');
+        }
+
+        .clear {
+            background: url('image/clear.png');
+        }
+
+        .undo {
+            background: url('image/undo.png');
+        }
+
+        .redo {
+            background: url('image/redo.png');
+        }
+    </style>
 </head>
 
 <body>
     <canvas id="draw" width="800" height="800"></canvas>
+
+    <div class="tools">
+        <div class="container">
+            <button class="save" id="save" title="保存"></button>
+            <button class="brush active" id="brush" title="画笔"></button>
+            <button class="eraser" id="eraser" title="橡皮擦"></button>
+            <button class="clear" id="clear" title="清屏"></button>
+            <button class="undo" id="undo" title="撤销"></button>
+            <button class="redo" id="redo" title="再做"></button>
+        </div>
+    </div>
+    <!-- <div class="pen-detail" id="penDetail">
+        <i class="closeBtn"></i>
+        <p>笔大小</p>
+        <span class="circle-box"><i id="thickness"></i></span> <input type="range" id="range1" min="1" max="10"
+            value="1">
+        <p>笔颜色</p>
+        <ul class="pen-color clearfix">
+            <li class="color-item active" style="background-color: black;"></li>
+            <li class="color-item" style="background-color: #FF3333;"></li>
+            <li class="color-item" style="background-color: #99CC00;"></li>
+            <li class="color-item" style="background-color: #0066FF;"></li>
+            <li class="color-item" style="background-color: #FFFF33;"></li>
+            <li class="color-item" style="background-color: #33CC66;"></li>
+        </ul>
+        <p>不透明度</p>
+        <i class="showOpacity"></i> <input type="range" id="range2" min="1" max="10" value="1">
+    </div> -->
     <script>
 
-        window.onload = function () {
+        window.onload = () => {
 
             /**@type HTMLCanvasElement*/
             const canvas = document.querySelector("#draw");
@@ -25,7 +122,7 @@
             // 复习：对象的解构赋值
             let lastPoint = { undefined, undefined };
 
-            canvas.onmousedown = function (e) {
+            canvas.onmousedown = (e) => {
                 painting = true;
                 let x = event.clientX;
                 let y = event.clientY;
@@ -33,7 +130,7 @@
                 // drawCircle(x, y);
             }
 
-            canvas.onmousemove = function (e) {
+            canvas.onmousemove = (e) => {
                 if (painting) {
                     let x = event.clientX;
                     let y = event.clientY;
@@ -43,11 +140,11 @@
                 }
             }
 
-            canvas.onmouseup = function (e) {
+            canvas.onmouseup = (e) => {
                 painting = false;
             }
 
-            function drawLine(x1, y1, x2, y2) {
+            drawLine = (x1, y1, x2, y2) => {
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);

@@ -183,13 +183,38 @@
                 painting = false;
             }
 
+            // 兼容移动端
+            if (document.body.ontouchstart !== undefined) {
+                canvas.ontouchstart = (e) => {
+                    painting = true;
+                    let x1 = e.touches[0].clientX;
+                    let y1 = e.touches[0].clientY;
+                    lastPoint = { 'x': x1, 'y': y1 };
+                }
+
+                canvas.ontouchmove = (e) => {
+                    if (painting) {
+                        let x1 = lastPoint['x'];
+                        let y1 = lastPoint['y'];
+                        let x2 = event.touches[0].clientX;
+                        let y2 = event.touches[0].clientY;
+                        let newPoint = { 'x': x2, 'y': y2 };
+                        drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
+                        lastPoint = newPoint;
+                    }
+                }
+                canvas.ontouchend = (e) => {
+                    painting = false;
+                }
+            }
+
             drawLine = (x1, y1, x2, y2) => {
                 ctx.beginPath();
                 ctx.lineWidth = lineWidth;
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
                 ctx.lineCap = "round"
-                ctx.lineJoin = 'round';
+                ctx.lineJoin = "round";
                 ctx.stroke();
                 ctx.closePath();
             }
@@ -199,6 +224,7 @@
             thickness.style.transform = 'scale(' + (parseInt(sizeRange.value)) + ')';
             lineWidth = parseInt(sizeRange.value * 2);
         }
+
 
         autoSetSize();
         listenToUser();

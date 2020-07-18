@@ -67,7 +67,7 @@
             /* background-size: cover; */
         }
 
-        .tools button.active {
+        .tools button.isActive {
             border: 2px solid #1398E6;
             border-radius: 5px;
         }
@@ -104,17 +104,17 @@
     <div class="tools">
         <div class="container">
             <button class="save" id="save" title="保存"></button>
-            <button class="brush active" id="brush" title="画笔"></button>
+            <button class="brush isActive" id="brush" title="画笔"></button>
             <button class="eraser" id="eraser" title="橡皮擦"></button>
             <button class="clear" id="clear" title="清屏"></button>
             <button class="undo" id="undo" title="撤销"></button>
             <button class="redo" id="redo" title="再做"></button>
         </div>
     </div>
-    <!-- <div class="pen-detail" id="penDetail">
+    <div class="pen-detail" id="penDetail">
         <i class="closeBtn"></i>
         <p>笔大小</p>
-        <span class="circle-box"><i id="thickness"></i></span> <input type="range" id="range1" min="1" max="10"
+        <span class="circle-box"><i id="thickness"></i></span> <input type="range" id="sizeRange" min="1" max="10"
             value="1">
         <p>笔颜色</p>
         <ul class="pen-color clearfix">
@@ -127,11 +127,15 @@
         </ul>
         <p>不透明度</p>
         <i class="showOpacity"></i> <input type="range" id="range2" min="1" max="10" value="1">
-    </div> -->
+    </div>
     <script>
         /**@type HTMLCanvasElement*/
-        const canvas = document.querySelector("#draw");
-        const ctx = canvas.getContext('2d');
+        let canvas = document.querySelector("#draw");
+        let brush = document.querySelector(".brush");
+        let sizeRange = document.querySelector("#sizeRange")
+
+        let ctx = canvas.getContext('2d');
+        let lineWidth = 4;
 
         let autoSetSize = () => {
             let setSize = () => {
@@ -181,6 +185,7 @@
 
             drawLine = (x1, y1, x2, y2) => {
                 ctx.beginPath();
+                ctx.lineWidth = lineWidth;
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
                 ctx.lineCap = "round"
@@ -188,6 +193,11 @@
                 ctx.stroke();
                 ctx.closePath();
             }
+        }
+
+        sizeRange.onchange = function () {
+            thickness.style.transform = 'scale(' + (parseInt(sizeRange.value)) + ')';
+            lineWidth = parseInt(sizeRange.value * 2);
         }
 
         autoSetSize();

@@ -27,6 +27,7 @@
         }
 
         .wrapper {
+            max-width: 350px;
             border: rgba(0, 0, 0, 0.1) 10px solid;
         }
 
@@ -34,6 +35,49 @@
             text-align: center;
             /* color: white; */
             font-weight: 100;
+        }
+
+        .plates {
+            margin: 0;
+            padding: 0;
+            text-align: left;
+            list-style: none;
+        }
+
+        .plates li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            padding: 10px 0;
+            font-weight: 100;
+            display: flex;
+        }
+
+        .plates label {
+            flex: 1;
+            cursor: pointer;
+
+        }
+
+        .plates input {
+            display: none;
+        }
+
+        .plates input+label:before {
+            content: '⬜️';
+            margin-right: 10px;
+        }
+
+        .plates input:checked+label:before {
+            content: '🌮';
+        }
+
+        .add-items {
+            margin-top: 20px;
+        }
+
+        .add-items input {
+            padding: 10px;
+            outline: 0;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -70,6 +114,10 @@
         <form class="add-items">
             <input type="text" name="item" placeholder="Item Name" required>
             <input type="submit" value="+ Add Item">
+
+            <input class="check-all" type="button" value="Check All">
+            <input class="uncheck-all" type="button" value="Uncheck All">
+            <input class="delete-all" type="reset" value="Delete All">
         </form>
     </div>
 

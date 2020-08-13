@@ -1,0 +1,16 @@
+.navbar {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  margin: 0 auto;
+}
+.navbar ul {
+  list-style: none;
+  display: flex;
+}
+@media screen and (max-width: 600px) {
+  .navbar ul > li {
+    display: none;
+  }
+}

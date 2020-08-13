@@ -1,0 +1,13 @@
+@import url(small-x.css) only screen and
+(max-width:768px);
+@import url(mobile.css) only screen and
+(min-width:768px);
+@import url(medium.css) only screen and
+(min-width:960x);
+@import url(max.css) only screen and
+(min-width:1200x);
+
+@import url(navbar.css) all;
+@import url(common.css) all;
+
+
